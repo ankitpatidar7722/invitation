@@ -1,0 +1,235 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-ivory font-sans text-ink antialiased;
+    background-image:
+      radial-gradient(1200px 600px at 10% -10%, rgba(242, 210, 214, 0.45), transparent 60%),
+      radial-gradient(900px 500px at 110% 20%, rgba(220, 199, 155, 0.22), transparent 60%),
+      radial-gradient(900px 700px at -10% 80%, rgba(249, 230, 231, 0.5), transparent 60%);
+    background-attachment: fixed;
+  }
+
+  :focus-visible {
+    outline: 2px solid #8e6f3a;
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  ::selection {
+    background: #f2d2d6;
+    color: #3f2f2b;
+  }
+}
+
+@layer components {
+  .section {
+    @apply relative mx-auto w-full max-w-5xl px-5 py-20 sm:px-8 sm:py-28;
+    scroll-margin-top: 4rem;
+  }
+
+  .eyebrow {
+    @apply font-sans text-[0.72rem] font-medium uppercase tracking-[0.32em] text-gold-600;
+  }
+
+  .heading {
+    @apply font-serif text-4xl font-medium leading-tight text-ink sm:text-5xl;
+  }
+
+  .card {
+    @apply relative rounded-[1.75rem] border border-gold-300/60 bg-white/70 shadow-card backdrop-blur-sm;
+  }
+
+  /* Double hairline frame inside cards */
+  .card-frame::after {
+    content: "";
+    @apply pointer-events-none absolute inset-2 rounded-[1.35rem] border border-gold-300/50;
+  }
+
+  .btn {
+    @apply inline-flex min-h-[48px] items-center justify-center gap-2 rounded-full px-6 py-3 font-sans text-sm font-medium tracking-wide transition duration-300;
+  }
+
+  .btn-gold {
+    @apply btn text-white shadow-soft hover:-translate-y-0.5 hover:shadow-lg;
+    background: linear-gradient(135deg, #b39258 0%, #8e6f3a 55%, #a07f46 100%);
+  }
+
+  .btn-outline {
+    @apply btn border border-gold-400 bg-white/60 text-gold-700 hover:-translate-y-0.5 hover:bg-blush-50;
+  }
+
+  .gold-text {
+    background: linear-gradient(120deg, #8e6f3a 0%, #b39258 40%, #6e5429 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+/* ── Hindi typography ─────────────────────────────────────
+   Wide letter-spacing breaks Devanagari conjuncts, tight line-height
+   clips matras, and tiny Latin-sized labels are hard to read. */
+html[lang="hi"] .eyebrow,
+html[lang="hi"] [class*="tracking-"] {
+  letter-spacing: 0.03em !important;
+}
+html[lang="hi"] .leading-none,
+html[lang="hi"] .leading-tight {
+  line-height: 1.35 !important;
+}
+html[lang="hi"] .eyebrow,
+html[lang="hi"] [class*="text-[0.6"],
+html[lang="hi"] [class*="text-[0.7"] {
+  font-size: 0.85rem !important;
+}
+
+/* ── Scroll reveal ─────────────────────────────────────────
+   Only hidden when JS is running (html.js) so content is never
+   lost without JavaScript. */
+html.js .reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+html.js .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Cover is a JS enhancement; without JS show the invitation directly. */
+html:not(.js) .cover {
+  display: none;
+}
+
+/* ── Cover reveal (doors) ─────────────────────────────── */
+.cover-door {
+  transition: transform 1.1s cubic-bezier(0.7, 0, 0.2, 1) 0.35s;
+}
+.cover.is-opening .cover-door-left {
+  transform: translateX(-101%);
+}
+.cover.is-opening .cover-door-right {
+  transform: translateX(101%);
+}
+.cover-content {
+  transition:
+    opacity 0.55s ease,
+    transform 0.7s ease;
+}
+.cover.is-opening .cover-content {
+  opacity: 0;
+  transform: scale(0.94);
+}
+
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(1.5deg);
+  }
+}
+.animate-float-slow {
+  animation: float-slow 7s ease-in-out infinite;
+}
+
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.animate-spin-slow {
+  animation: spin-slow 120s linear infinite;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.animate-fade-up {
+  animation: fade-up 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+.btn-shimmer {
+  background-size: 200% 100%;
+  animation: shimmer 4s linear infinite;
+}
+
+@keyframes petal-fall {
+  0% {
+    transform: translate3d(0, -10vh, 0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translate3d(var(--drift, 40px), 110vh, 0) rotate(540deg);
+    opacity: 0;
+  }
+}
+.petal {
+  animation: petal-fall var(--dur, 14s) linear var(--delay, 0s) infinite;
+}
+
+/* ── Reduced motion: everything visible, nothing moves ───── */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  html.js .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .cover-door,
+  .cover-content {
+    transition: none !important;
+  }
+  .animate-float-slow,
+  .animate-spin-slow,
+  .animate-fade-up,
+  .btn-shimmer,
+  .petal {
+    animation: none !important;
+  }
+  .petal {
+    display: none;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}

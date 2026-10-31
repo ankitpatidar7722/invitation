@@ -1,0 +1,233 @@
+import type { Lang } from "@/data/wedding";
+
+/** Every fixed UI string, in both languages. Wedding details live in src/data/wedding.ts. */
+const en = {
+  langToggle: "हिन्दी में देखें",
+  langToggleShort: "हिं",
+  cover: {
+    shubhVivah: "Shubh Vivah",
+    weddingInvitation: "Wedding Invitation",
+    open: "Open Invitation",
+    tap: "Tap to open",
+  },
+  skip: "Skip to invitation",
+  nav: {
+    label: "Invitation sections",
+    couple: "Couple",
+    countdown: "Countdown",
+    events: "Events",
+    venue: "Venue",
+    gallery: "Gallery",
+    contact: "Contact",
+    share: "Share",
+  },
+  hero: {
+    together: "Together with their families",
+    weds: "weds",
+    scroll: "Scroll to the invitation",
+  },
+  families: {
+    eyebrow: "The Couple & Families",
+    title: "With Joy & Blessings",
+    groom: "The Groom",
+    bride: "The Bride",
+    grandson: "Grandson of",
+    son: "Son of",
+    granddaughter: "Granddaughter of",
+    daughter: "Daughter of",
+  },
+  countdown: {
+    eyebrow: "Counting the moments",
+    title: "Until We Say “I Do”",
+    ist: "India Standard Time",
+    days: "Days",
+    hours: "Hours",
+    minutes: "Minutes",
+    seconds: "Seconds",
+    srLeft: (days: string, date: string) => `${days} days to go until the wedding on ${date}.`,
+    srOn: (date: string) => `The wedding is on ${date}.`,
+    today: "Today is the day!",
+    after: "Happily married",
+    todayMsg: (g: string, b: string) =>
+      `${g} & ${b} are getting married today. Thank you for celebrating with us!`,
+    afterMsg: (g: string, b: string) => `${g} & ${b} thank you for your love and blessings.`,
+  },
+  events: {
+    eyebrow: "Wedding Festivities",
+    title: "Celebrations & Rituals",
+    subtitle: "We would be honoured by your presence at each of these auspicious occasions.",
+    weddingDay: "Wedding Day",
+  },
+  venue: {
+    eyebrow: "Where to find us",
+    title: "Venue & Directions",
+    label: "The Wedding Venue",
+    directions: "Get Directions",
+    opensMaps: "(opens Google Maps in a new tab)",
+  },
+  gallery: {
+    eyebrow: "Moments",
+    title: "Our Gallery",
+    subtitle: "A few cherished moments — tap any photo to view it larger.",
+    soon: "Coming soon",
+    open: "Open photo:",
+    close: "Close photo",
+    prev: "Previous photo",
+    next: "Next photo",
+    position: (i: number, n: number) => `Photo ${i} of ${n}`,
+  },
+  contact: {
+    eyebrow: "RSVP",
+    title: "Kindly Get in Touch",
+    subtitle:
+      "We would love to hear from you. Please call or message us to share your plans or for any help with travel.",
+    call: "Call",
+    whatsapp: "WhatsApp",
+    newTab: "(opens in a new tab)",
+  },
+  share: {
+    eyebrow: "Share the joy",
+    title: "Invitation Card",
+    subtitle:
+      "Save the invitation card as a photo or send it straight to family and friends on WhatsApp.",
+    preparing: "Preparing the card…",
+    cardAlt: "Invitation card image",
+    download: "Download Card",
+    shareCard: "Share Card",
+    shareLink: "Send Link on WhatsApp",
+    copyLink: "Copy Link",
+    copied: "Link copied!",
+    shareText: (g: string, b: string, date: string) =>
+      `You are warmly invited to the wedding of ${g} & ${b} on ${date}. Open the invitation:`,
+    qrTitle: "QR Code",
+    qrText:
+      "Anyone can scan this QR code to open the invitation. Download it to print on the wedding cards.",
+    qrPng: "Download QR (photo)",
+    qrSvg: "Download QR (for printing)",
+    localWarning:
+      "This is a local address — download the QR from the live website (after deploying) so it works for everyone.",
+    cardScan: "Scan to open the full invitation",
+  },
+  closing: {
+    thanks: "Thank You",
+  },
+  music: { on: "Turn music on", off: "Turn music off" },
+};
+
+export type Dict = typeof en;
+
+const hi: Dict = {
+  langToggle: "View in English",
+  langToggleShort: "EN",
+  cover: {
+    shubhVivah: "शुभ विवाह",
+    weddingInvitation: "विवाह निमंत्रण",
+    open: "निमंत्रण खोलें",
+    tap: "खोलने के लिए छुएँ",
+  },
+  skip: "निमंत्रण पर जाएँ",
+  nav: {
+    label: "निमंत्रण के भाग",
+    couple: "वर-वधू",
+    countdown: "शेष समय",
+    events: "कार्यक्रम",
+    venue: "स्थान",
+    gallery: "तस्वीरें",
+    contact: "संपर्क",
+    share: "भेजें",
+  },
+  hero: {
+    together: "सपरिवार सादर आमंत्रण",
+    weds: "संग",
+    scroll: "निमंत्रण देखें",
+  },
+  families: {
+    eyebrow: "वर-वधू एवं परिवार",
+    title: "मंगल परिणय",
+    groom: "वर",
+    bride: "वधू",
+    grandson: "सुपौत्र",
+    son: "सुपुत्र",
+    granddaughter: "सुपौत्री",
+    daughter: "सुपुत्री",
+  },
+  countdown: {
+    eyebrow: "शुभ घड़ी की प्रतीक्षा",
+    title: "विवाह में शेष समय",
+    ist: "भारतीय समय",
+    days: "दिन",
+    hours: "घंटे",
+    minutes: "मिनट",
+    seconds: "सेकंड",
+    srLeft: (days: string, date: string) => `${date} को विवाह में ${days} दिन शेष हैं।`,
+    srOn: (date: string) => `विवाह ${date} को है।`,
+    today: "आज शुभ विवाह है!",
+    after: "विवाह संपन्न",
+    todayMsg: (g: string, b: string) =>
+      `आज ${g} एवं ${b} का शुभ विवाह है। हमारे साथ उत्सव मनाने के लिए धन्यवाद!`,
+    afterMsg: (g: string, b: string) =>
+      `आपके प्रेम एवं आशीर्वाद के लिए ${g} एवं ${b} हृदय से आभारी हैं।`,
+  },
+  events: {
+    eyebrow: "मांगलिक कार्यक्रम",
+    title: "शुभ कार्यक्रम एवं रस्में",
+    subtitle: "इन सभी शुभ अवसरों पर आपकी उपस्थिति हमारे लिए सौभाग्य होगी।",
+    weddingDay: "विवाह दिवस",
+  },
+  venue: {
+    eyebrow: "कैसे पहुँचें",
+    title: "विवाह स्थल एवं मार्ग",
+    label: "विवाह स्थल",
+    directions: "रास्ता देखें",
+    opensMaps: "(नए टैब में Google Maps खुलेगा)",
+  },
+  gallery: {
+    eyebrow: "यादें",
+    title: "हमारी तस्वीरें",
+    subtitle: "कुछ अनमोल पल — बड़ा देखने के लिए किसी भी तस्वीर को छुएँ।",
+    soon: "जल्द आ रही है",
+    open: "तस्वीर खोलें:",
+    close: "तस्वीर बंद करें",
+    prev: "पिछली तस्वीर",
+    next: "अगली तस्वीर",
+    position: (i: number, n: number) => `तस्वीर ${i} / ${n}`,
+  },
+  contact: {
+    eyebrow: "आगमन की सूचना",
+    title: "संपर्क करें",
+    subtitle:
+      "आपसे बात करके हमें खुशी होगी। आने की सूचना देने या यात्रा में किसी भी मदद के लिए कॉल या संदेश करें।",
+    call: "कॉल करें",
+    whatsapp: "व्हाट्सऐप",
+    newTab: "(नए टैब में खुलेगा)",
+  },
+  share: {
+    eyebrow: "खुशियाँ बाँटें",
+    title: "निमंत्रण कार्ड",
+    subtitle:
+      "निमंत्रण कार्ड को फ़ोटो के रूप में सेव करें या सीधे व्हाट्सऐप पर अपने परिवार और मित्रों को भेजें।",
+    preparing: "कार्ड तैयार हो रहा है…",
+    cardAlt: "निमंत्रण कार्ड की तस्वीर",
+    download: "कार्ड डाउनलोड करें",
+    shareCard: "कार्ड भेजें",
+    shareLink: "लिंक व्हाट्सऐप पर भेजें",
+    copyLink: "लिंक कॉपी करें",
+    copied: "लिंक कॉपी हो गया!",
+    shareText: (g: string, b: string, date: string) =>
+      `आप सपरिवार सादर आमंत्रित हैं — ${g} एवं ${b} का शुभ विवाह, ${date}। निमंत्रण देखें:`,
+    qrTitle: "QR कोड",
+    qrText:
+      "इस QR कोड को स्कैन करके कोई भी यह निमंत्रण खोल सकता है। छपे हुए कार्ड पर लगाने के लिए इसे डाउनलोड करें।",
+    qrPng: "QR डाउनलोड (फ़ोटो)",
+    qrSvg: "QR डाउनलोड (प्रिंट के लिए)",
+    localWarning:
+      "यह अभी लोकल पता है — वेबसाइट लाइव होने के बाद वहीं से QR डाउनलोड करें, ताकि यह सबके फ़ोन पर चले।",
+    cardScan: "पूरा निमंत्रण देखने के लिए स्कैन करें",
+  },
+  closing: {
+    thanks: "धन्यवाद",
+  },
+  music: { on: "संगीत चालू करें", off: "संगीत बंद करें" },
+};
+
+export const dicts: Record<Lang, Dict> = { hi, en };
