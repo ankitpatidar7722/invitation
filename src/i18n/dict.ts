@@ -64,6 +64,7 @@ const en = {
     label: "The Wedding Venue",
     directions: "Get Directions",
     opensMaps: "(opens Google Maps in a new tab)",
+    mapTitle: "Map of the wedding venue",
   },
   gallery: {
     eyebrow: "Moments",
@@ -180,6 +181,7 @@ const hi: Dict = {
     label: "विवाह स्थल",
     directions: "रास्ता देखें",
     opensMaps: "(नए टैब में Google Maps खुलेगा)",
+    mapTitle: "विवाह स्थल का नक्शा",
   },
   gallery: {
     eyebrow: "यादें",

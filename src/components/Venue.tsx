@@ -1,7 +1,7 @@
 import { MapPin, Navigation } from "lucide-react";
 import { wedding } from "@/data/wedding";
 import { useLang } from "@/i18n/LangProvider";
-import { mapsHref } from "@/lib/format";
+import { mapEmbedSrc, mapsHref } from "@/lib/format";
 import { FloralCorner, Mandala } from "./ornaments/Floral";
 import Reveal from "./Reveal";
 import SectionHeading from "./SectionHeading";
@@ -29,6 +29,18 @@ export default function Venue() {
               </span>
             ))}
           </address>
+
+          {wedding.venue.pin && (
+            <div className="mx-auto mt-8 overflow-hidden rounded-2xl border border-gold-300/70 shadow-soft">
+              <iframe
+                src={mapEmbedSrc(wedding.venue.pin)}
+                title={dict.venue.mapTitle}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="block h-64 w-full sm:h-72"
+              />
+            </div>
+          )}
 
           <a
             href={mapsHref()}

@@ -39,8 +39,17 @@ export const whatsappHref = (n: string, lang: Lang = "en") =>
 /** Opens WhatsApp's "send to…" picker with a ready-made message. */
 export const whatsappShareHref = (text: string) => `https://wa.me/?text=${encodeURIComponent(text)}`;
 
-export const mapsHref = () =>
-  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(wedding.venue.mapsQuery)}`;
+/** Navigation to the exact pin when known, otherwise a search for the village. */
+export function mapsHref(): string {
+  const { pin, mapsQuery } = wedding.venue;
+  return pin
+    ? `https://www.google.com/maps/dir/?api=1&destination=${pin.lat},${pin.lng}`
+    : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapsQuery)}`;
+}
+
+/** Key-free Google Maps embed showing the pin. */
+export const mapEmbedSrc = (pin: { lat: number; lng: number }) =>
+  `https://maps.google.com/maps?q=${pin.lat},${pin.lng}&z=15&output=embed`;
 
 /** Public address of the invitation, used for QR codes and share links. */
 export function siteUrl(): string {

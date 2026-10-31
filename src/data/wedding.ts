@@ -59,8 +59,14 @@ export type WeddingConfig = {
     /** Short place name shown beside the date in the hero. */
     shortName: Txt;
     lines: Txt[];
-    /** Text used for the Google Maps search link (no invented coordinates). */
+    /** Text used for the Google Maps search link when no pin is set. */
     mapsQuery: string;
+    /**
+     * Exact location of the house / venue. When set, "Get Directions" starts
+     * navigation to this point and the venue card shows a small map.
+     * Copy it from Google Maps (long-press the spot → numbers like 23.81234, 76.12345).
+     */
+    pin: { lat: number; lng: number } | null;
   };
   contacts: string[];
   /** Country calling code used for tel: and WhatsApp links. */
@@ -119,6 +125,8 @@ export const wedding: WeddingConfig = {
     ],
     mapsQuery:
       "Village Gothada, Tehsil Nalkheda, District Agar Malwa, Madhya Pradesh, India",
+    // Groom's home, W7RR+33R Gothada (from Google Maps).
+    pin: { lat: 23.940243, lng: 76.2901501 },
   },
 
   contacts: ["7722818772", "8103785807", "9977982765"],
