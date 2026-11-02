@@ -1,4 +1,4 @@
-import { wedding, type Lang } from "@/data/wedding";
+import { wedding, type Lang, type Venue } from "@/data/wedding";
 
 const LOCALE: Record<Lang, string> = { hi: "hi-IN", en: "en-IN" };
 
@@ -39,17 +39,20 @@ export const whatsappHref = (n: string, lang: Lang = "en") =>
 /** Opens WhatsApp's "send to…" picker with a ready-made message. */
 export const whatsappShareHref = (text: string) => `https://wa.me/?text=${encodeURIComponent(text)}`;
 
-/** Navigation to the exact pin when known, otherwise a search for the village. */
-export function mapsHref(): string {
-  const { pin, mapsQuery } = wedding.venue;
-  return pin
-    ? `https://www.google.com/maps/dir/?api=1&destination=${pin.lat},${pin.lng}`
-    : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapsQuery)}`;
-}
+/** A venue as Google Maps understands it: exact pin when known, else the address text. */
+const mapsPoint = (v: Venue) => (v.pin ? `${v.pin.lat},${v.pin.lng}` : v.mapsQuery);
 
-/** Key-free Google Maps embed showing the pin. */
-export const mapEmbedSrc = (pin: { lat: number; lng: number }) =>
-  `https://maps.google.com/maps?q=${pin.lat},${pin.lng}&z=15&output=embed`;
+/** Navigation from the guest's location to the venue. */
+export const mapsHref = (v: Venue) =>
+  `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(mapsPoint(v))}`;
+
+/** Route between two venues, e.g. the baraat from the groom's home to the bride's. */
+export const routeHref = (from: Venue, to: Venue) =>
+  `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(mapsPoint(from))}&destination=${encodeURIComponent(mapsPoint(to))}`;
+
+/** Key-free Google Maps embed (pin, or the village when no pin is set). */
+export const mapEmbedSrc = (v: Venue) =>
+  `https://maps.google.com/maps?q=${encodeURIComponent(mapsPoint(v))}&z=${v.pin ? 15 : 13}&output=embed`;
 
 /** Public address of the invitation, used for QR codes and share links. */
 export function siteUrl(): string {

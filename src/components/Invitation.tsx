@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { wedding } from "@/data/wedding";
 import { LangProvider, useLang } from "@/i18n/LangProvider";
 import Cover from "./Cover";
@@ -16,6 +16,8 @@ import Closing from "./Closing";
 import MusicToggle from "./MusicToggle";
 import Petals from "./Petals";
 import Share from "./Share";
+import Fireworks from "./Fireworks";
+import AutoScroll from "./AutoScroll";
 import { OrnamentSprite } from "./ornaments/Floral";
 
 const OPENED_KEY = "ay-invitation-opened";
@@ -33,6 +35,8 @@ function InvitationBody() {
   const [opened, setOpened] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [playing, setPlaying] = useState(false);
+  const [celebrating, setCelebrating] = useState(false);
+  const endCelebration = useCallback(() => setCelebrating(false), []);
   const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
@@ -101,7 +105,8 @@ function InvitationBody() {
       </a>
 
       {/* Rendered from first paint (no flash of content); CSS hides it when JS is off. */}
-      {!opened && <Cover onOpened={handleOpened} />}
+      {!opened && <Cover onOpening={() => setCelebrating(true)} onOpened={handleOpened} />}
+      {celebrating && <Fireworks onDone={endCelebration} />}
 
       <div inert={lockContent ? true : undefined}>
         <Petals />
@@ -118,6 +123,8 @@ function InvitationBody() {
           <Closing />
         </main>
       </div>
+
+      <AutoScroll enabled={opened} />
 
       {wedding.music.src && (
         <>

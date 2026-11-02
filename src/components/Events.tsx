@@ -1,10 +1,26 @@
-import { Clock, Sparkles } from "lucide-react";
-import { wedding } from "@/data/wedding";
+import { Clock, MapPin, Sparkles } from "lucide-react";
+import { wedding, type VenueKey } from "@/data/wedding";
 import { useLang } from "@/i18n/LangProvider";
 import { dayOfMonth, longDate, monthShort, weekday } from "@/lib/format";
 import { RoseIcon } from "./ornaments/Floral";
 import Reveal from "./Reveal";
 import SectionHeading from "./SectionHeading";
+
+/** Small tappable tag that jumps to the venue card. */
+function VenueTag({ which }: { which: VenueKey }) {
+  const { tx } = useLang();
+  return (
+    <a
+      href={`#venue-${which}`}
+      className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 font-sans text-xs transition hover:underline ${
+        which === "bride" ? "bg-rose-500/10 text-rose-600" : "bg-gold-300/25 text-gold-700"
+      }`}
+    >
+      <MapPin className="h-3.5 w-3.5" aria-hidden="true" />
+      {tx(wedding.venues[which].tag)}
+    </a>
+  );
+}
 
 export default function Events() {
   const { lang, dict, tx } = useLang();
@@ -23,7 +39,10 @@ export default function Events() {
           aria-hidden="true"
           className="absolute bottom-6 left-[2.35rem] top-6 w-px bg-gradient-to-b from-gold-300/0 via-gold-400 to-gold-300/0 sm:left-[3.1rem]"
         />
-        {wedding.events.map((day, i) => (
+        {wedding.events.map((day, i) => {
+          const places = [...new Set(day.items.map((it) => it.venue ?? "groom"))];
+          const perItem = places.length > 1;
+          return (
           <Reveal as="li" key={day.date} delay={i * 80} className="relative mb-8 flex gap-4 last:mb-0 sm:gap-8">
             <div className="relative z-10 shrink-0">
               <div
@@ -64,18 +83,27 @@ export default function Events() {
                       <RoseIcon className="h-4 w-4 shrink-0" tone={day.highlight ? "pink" : "ivory"} />
                       <span className="font-serif text-xl text-ink sm:text-2xl">{tx(item.name)}</span>
                     </span>
-                    {item.time && (
-                      <span className="inline-flex items-center gap-1.5 rounded-full border border-gold-300/70 bg-ivory px-3 py-1 font-sans text-xs text-gold-700">
-                        <Clock className="h-3.5 w-3.5" aria-hidden="true" />
-                        {tx(item.time)}
-                      </span>
-                    )}
+                    <span className="flex flex-wrap items-center gap-1.5">
+                      {item.time && (
+                        <span className="inline-flex items-center gap-1.5 rounded-full border border-gold-300/70 bg-ivory px-3 py-1 font-sans text-xs text-gold-700">
+                          <Clock className="h-3.5 w-3.5" aria-hidden="true" />
+                          {tx(item.time)}
+                        </span>
+                      )}
+                      {perItem && <VenueTag which={item.venue ?? "groom"} />}
+                    </span>
                   </li>
                 ))}
               </ul>
+              {!perItem && (
+                <div className="mt-3 border-t border-gold-300/30 pt-3">
+                  <VenueTag which={places[0]!} />
+                </div>
+              )}
             </article>
           </Reveal>
-        ))}
+          );
+        })}
       </ol>
     </section>
   );

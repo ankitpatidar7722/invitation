@@ -42,12 +42,12 @@ export default function Hero() {
             <span className="text-xs tracking-[0.3em] text-gold-600">{year(d, lang)}</span>
           </span>
           <span className="w-24 border-y border-gold-300 py-1 text-sm uppercase tracking-[0.25em] sm:w-28">
-            {tx(wedding.venue.shortName)}
+            {tx(wedding.venues.groom.shortName)}
           </span>
         </div>
 
         <p className="mt-6 text-sm text-ink-soft">
-          {wedding.venue.lines.map(tx).join(" ")}
+          {wedding.venues.groom.lines.map(tx).join(" ")}
         </p>
       </Reveal>
 

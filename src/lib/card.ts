@@ -206,7 +206,14 @@ export async function renderCard(lang: Lang, qr: QrMatrix | null): Promise<HTMLC
   for (const day of wedding.events) {
     const color = day.highlight ? COLOR.rose : COLOR.ink;
     text(`${dayOfMonth(day.date, lang)} ${monthShort(day.date, lang)}`, font.eyebrow, COLOR.gold, dateX, y + 2, "right");
-    const line = day.items.map((it) => (it.time ? `${tx(it.name)} (${tx(it.time)})` : tx(it.name))).join("  ·  ");
+    const line = day.items
+      .map((it) => {
+        let label = it.time ? `${tx(it.name)} (${tx(it.time)})` : tx(it.name);
+        // Most functions are at the groom's home; call out the ones elsewhere.
+        if (it.venue && it.venue !== "groom") label += ` — ${tx(wedding.venues[it.venue].tag)}`;
+        return label;
+      })
+      .join("  ·  ");
     ctx.font = font.event;
     for (const l of wrap(ctx, line, itemsW)) {
       text(l, font.event, color, itemsX, y, "left");
@@ -219,26 +226,27 @@ export async function renderCard(lang: Lang, qr: QrMatrix | null): Promise<HTMLC
   if (divider) ctx.drawImage(divider, cx - 240, y);
   y += 90;
 
-  // Venue
-  spacing(4);
-  text(dict.venue.label.toUpperCase(), font.label, COLOR.gold, cx, y);
-  spacing(0);
-  y += 42;
-  for (const l of wedding.venue.lines) {
-    text(tx(l), font.person, COLOR.ink, cx, y);
-    y += 46;
+  // Venues: groom's home and bride's home
+  for (const v of [wedding.venues.groom, wedding.venues.bride]) {
+    spacing(4);
+    text(tx(v.label).toUpperCase(), font.label, COLOR.gold, cx, y);
+    spacing(0);
+    y += 42;
+    for (const l of v.lines) {
+      text(tx(l), font.person, COLOR.ink, cx, y);
+      y += 46;
+    }
+    y += 26;
   }
-  y += 30;
 
   // Contacts
   spacing(4);
   text(dict.nav.contact.toUpperCase(), font.label, COLOR.gold, cx, y);
   spacing(0);
   y += 42;
-  ctx.font = font.body;
-  for (const l of wrap(ctx, wedding.contacts.map(prettyPhone).join("   ·   "), W - 260)) {
-    text(l, font.body, COLOR.ink, cx, y);
-    y += 44;
+  for (const c of wedding.contacts) {
+    text(`${tx(c.name)}:  ${prettyPhone(c.phone)}`, font.body, COLOR.ink, cx, y);
+    y += 46;
   }
   y += 40;
 

@@ -9,7 +9,7 @@ export const contentType = "image/png";
 
 export default async function OpengraphImage() {
   const date = longDate(wedding.weddingDate);
-  const place = wedding.venue.lines.map((l) => l.en).join(" ");
+  const place = wedding.venues.groom.lines.map((l) => l.en).join(" ");
   const text = `${wedding.groom.name.en}${wedding.bride.name.en}&WEDDING INVITATION${date}${place}`;
   const font = await loadSerif(text);
 

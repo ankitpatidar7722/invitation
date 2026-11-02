@@ -137,6 +137,24 @@ html:not(.js) .cover {
   transform: scale(0.94);
 }
 
+/* Evening-sky veil behind the opening fireworks */
+@keyframes fireworks-veil {
+  0% {
+    opacity: 0;
+  }
+  15%,
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.fireworks-veil {
+  background: radial-gradient(120% 90% at 50% 100%, rgba(74, 28, 48, 0.78), rgba(28, 16, 36, 0.86));
+  animation: fireworks-veil 4.4s ease-in-out both;
+}
+
 @keyframes float-slow {
   0%,
   100% {

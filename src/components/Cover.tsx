@@ -31,13 +31,14 @@ function Door({ side }: { side: "left" | "right" }) {
   );
 }
 
-export default function Cover({ onOpened }: { onOpened: () => void }) {
+export default function Cover({ onOpening, onOpened }: { onOpening?: () => void; onOpened: () => void }) {
   const [opening, setOpening] = useState(false);
   const { dict, tx } = useLang();
 
   const open = () => {
     if (opening) return;
     setOpening(true);
+    onOpening?.();
     window.setTimeout(onOpened, prefersReducedMotion() ? 0 : 1500);
   };
 

@@ -19,8 +19,31 @@ export type Person = {
   father: Txt;
 };
 
+/** Where an event happens: the groom's home or the bride's home. */
+export type VenueKey = "groom" | "bride";
+
+export type Venue = {
+  /** Card heading, e.g. "वर पक्ष निवास". */
+  label: Txt;
+  /** Short tag shown beside events, e.g. "वर निवास · गोठड़ा". */
+  tag: Txt;
+  /** Short place name. */
+  shortName: Txt;
+  lines: Txt[];
+  /** Text used for Google Maps search when no pin is set. */
+  mapsQuery: string;
+  /**
+   * Exact location. When set, directions go straight to this point and the
+   * map shows a pin; otherwise Maps searches `mapsQuery`.
+   * Copy it from Google Maps (long-press the spot → numbers like 23.81234, 76.12345).
+   */
+  pin: { lat: number; lng: number } | null;
+};
+
 export type ScheduleItem = {
   name: Txt;
+  /** Defaults to the groom's home. */
+  venue?: VenueKey;
   /** Only set when a time was actually supplied — never invent one. */
   time?: Txt;
 };
@@ -55,20 +78,10 @@ export type WeddingConfig = {
   weddingDateTime: string;
   weddingDate: string;
   timeZone: string;
-  venue: {
-    /** Short place name shown beside the date in the hero. */
-    shortName: Txt;
-    lines: Txt[];
-    /** Text used for the Google Maps search link when no pin is set. */
-    mapsQuery: string;
-    /**
-     * Exact location of the house / venue. When set, "Get Directions" starts
-     * navigation to this point and the venue card shows a small map.
-     * Copy it from Google Maps (long-press the spot → numbers like 23.81234, 76.12345).
-     */
-    pin: { lat: number; lng: number } | null;
-  };
-  contacts: string[];
+  /** The groom's home hosts most functions; the baraat goes to the bride's home. */
+  venues: Record<VenueKey, Venue>;
+  /** People guests can call or WhatsApp. `phone` is the 10-digit number. */
+  contacts: { phone: string; name: Txt }[];
   /** Country calling code used for tel: and WhatsApp links. */
   countryCode: string;
   whatsappMessage: Txt;
@@ -116,20 +129,41 @@ export const wedding: WeddingConfig = {
   weddingDate: "2027-01-19",
   timeZone: "Asia/Kolkata",
 
-  venue: {
-    shortName: { hi: "गोठड़ा", en: "Gothada" },
-    lines: [
-      { hi: "ग्राम गोठड़ा, तहसील नलखेड़ा,", en: "Village Gothada, Tehsil Nalkheda," },
-      { hi: "जिला आगर मालवा,", en: "District Agar Malwa," },
-      { hi: "मध्य प्रदेश, भारत", en: "Madhya Pradesh, India" },
-    ],
-    mapsQuery:
-      "Village Gothada, Tehsil Nalkheda, District Agar Malwa, Madhya Pradesh, India",
-    // Groom's home, W7RR+33R Gothada (from Google Maps).
-    pin: { lat: 23.940243, lng: 76.2901501 },
+  venues: {
+    groom: {
+      label: { hi: "वर पक्ष निवास", en: "Groom's Home" },
+      tag: { hi: "वर निवास · गोठड़ा", en: "Groom's home · Gothada" },
+      shortName: { hi: "गोठड़ा", en: "Gothada" },
+      lines: [
+        { hi: "ग्राम गोठड़ा, तहसील नलखेड़ा,", en: "Village Gothada, Tehsil Nalkheda," },
+        { hi: "जिला आगर मालवा,", en: "District Agar Malwa," },
+        { hi: "मध्य प्रदेश, भारत", en: "Madhya Pradesh, India" },
+      ],
+      mapsQuery:
+        "Village Gothada, Tehsil Nalkheda, District Agar Malwa, Madhya Pradesh, India",
+      // Groom's home, W7RR+33R Gothada (from Google Maps).
+      pin: { lat: 23.940243, lng: 76.2901501 },
+    },
+    bride: {
+      label: { hi: "वधू पक्ष निवास", en: "Bride's Home" },
+      tag: { hi: "वधू निवास · कालाखेड़ा", en: "Bride's home · Kalakheda" },
+      shortName: { hi: "कालाखेड़ा", en: "Kalakheda" },
+      lines: [
+        { hi: "ग्राम कालाखेड़ा, तहसील गरोठ,", en: "Village Kalakheda, Tehsil Garoth," },
+        { hi: "जिला मंदसौर,", en: "District Mandsaur," },
+        { hi: "मध्य प्रदेश - 458880", en: "Madhya Pradesh - 458880" },
+      ],
+      mapsQuery: "Kalakheda, Tehsil Garoth, District Mandsaur, Madhya Pradesh 458880, India",
+      // TODO: replace with the exact pin of the bride's home when available.
+      pin: null,
+    },
   },
 
-  contacts: ["7722818772", "8103785807", "9977982765"],
+  contacts: [
+    { phone: "7722818772", name: { hi: "अंकित पाटीदार", en: "Ankit Patidar" } },
+    { phone: "9977982765", name: { hi: "गिरिराज पाटीदार", en: "Giriraj Patidar" } },
+    { phone: "8103785807", name: { hi: "गोविंद पाटीदार", en: "Govind Patidar" } },
+  ],
   countryCode: "91",
   whatsappMessage: {
     hi: "नमस्ते! अंकित एवं यशस्वी (19 जनवरी 2027) का विवाह निमंत्रण मिल गया है।",
@@ -155,7 +189,11 @@ export const wedding: WeddingConfig = {
       date: "2027-01-18",
       items: [{ name: { hi: "मामेरा", en: "Mamera" } }, { name: { hi: "प्रीतिभोज", en: "Pritibhoj" } }],
     },
-    { date: "2027-01-19", items: [{ name: { hi: "बारात", en: "Bharat (Baraat)" } }], highlight: true },
+    {
+      date: "2027-01-19",
+      items: [{ name: { hi: "बारात", en: "Bharat (Baraat)" }, venue: "bride" }],
+      highlight: true,
+    },
   ],
 
   // Replace placeholders by adding files to /public/photos and setting `src`.

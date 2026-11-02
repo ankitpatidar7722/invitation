@@ -6,7 +6,7 @@ import Reveal from "./Reveal";
 import SectionHeading from "./SectionHeading";
 
 export default function Contact() {
-  const { lang, dict } = useLang();
+  const { lang, dict, tx } = useLang();
   const c = dict.contact;
   return (
     <section id="contact" className="section" aria-labelledby="contact-title">
@@ -18,14 +18,15 @@ export default function Contact() {
       />
 
       <ul className="mx-auto grid max-w-4xl gap-5 sm:grid-cols-3">
-        {wedding.contacts.map((n, i) => (
+        {wedding.contacts.map(({ phone: n, name }, i) => (
           <Reveal as="li" key={n} delay={i * 100} className="card card-frame px-6 py-8 text-center">
             <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-blush-100 text-rose-500">
               <Phone className="h-5 w-5" aria-hidden="true" />
             </span>
+            <p className="mt-4 font-script text-4xl leading-tight text-rose-600">{tx(name)}</p>
             <a
               href={telHref(n)}
-              className="mt-4 block font-serif text-2xl tabular-nums text-ink underline-offset-4 hover:text-rose-600 hover:underline"
+              className="mt-1 block font-serif text-2xl tabular-nums text-ink underline-offset-4 hover:text-rose-600 hover:underline"
             >
               {prettyPhone(n)}
             </a>
@@ -33,7 +34,7 @@ export default function Contact() {
               <a href={telHref(n)} className="btn-gold">
                 <Phone className="h-4 w-4" aria-hidden="true" />
                 {c.call}
-                <span className="sr-only"> {prettyPhone(n)}</span>
+                <span className="sr-only"> {tx(name)}, {prettyPhone(n)}</span>
               </a>
               <a
                 href={whatsappHref(n, lang)}
@@ -43,7 +44,7 @@ export default function Contact() {
               >
                 <MessageCircle className="h-4 w-4" aria-hidden="true" />
                 {c.whatsapp}
-                <span className="sr-only"> {prettyPhone(n)} {c.newTab}</span>
+                <span className="sr-only"> {tx(name)}, {prettyPhone(n)} {c.newTab}</span>
               </a>
             </div>
           </Reveal>

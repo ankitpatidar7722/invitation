@@ -60,11 +60,14 @@ const en = {
   },
   venue: {
     eyebrow: "Where to find us",
-    title: "Venue & Directions",
+    title: "Venues & Directions",
     label: "The Wedding Venue",
     directions: "Get Directions",
     opensMaps: "(opens Google Maps in a new tab)",
-    mapTitle: "Map of the wedding venue",
+    mapTitle: "Map",
+    routeTitle: "Baraat Route",
+    route: "See the baraat route",
+    to: "to",
   },
   gallery: {
     eyebrow: "Moments",
@@ -113,6 +116,7 @@ const en = {
     thanks: "Thank You",
   },
   music: { on: "Turn music on", off: "Turn music off" },
+  autoScroll: { pause: "Stop auto-scroll", play: "Start auto-scroll" },
 };
 
 export type Dict = typeof en;
@@ -181,7 +185,10 @@ const hi: Dict = {
     label: "विवाह स्थल",
     directions: "रास्ता देखें",
     opensMaps: "(नए टैब में Google Maps खुलेगा)",
-    mapTitle: "विवाह स्थल का नक्शा",
+    mapTitle: "नक्शा",
+    routeTitle: "बारात मार्ग",
+    route: "बारात का रास्ता देखें",
+    to: "से",
   },
   gallery: {
     eyebrow: "यादें",
@@ -230,6 +237,7 @@ const hi: Dict = {
     thanks: "धन्यवाद",
   },
   music: { on: "संगीत चालू करें", off: "संगीत बंद करें" },
+  autoScroll: { pause: "अपने-आप चलना रोकें", play: "अपने-आप चलाएँ" },
 };
 
 export const dicts: Record<Lang, Dict> = { hi, en };
