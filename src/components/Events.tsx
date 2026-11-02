@@ -2,7 +2,9 @@ import { Clock, MapPin, Sparkles } from "lucide-react";
 import { wedding, type VenueKey } from "@/data/wedding";
 import { useLang } from "@/i18n/LangProvider";
 import { dayOfMonth, longDate, monthShort, weekday } from "@/lib/format";
+import Image from "next/image";
 import { RoseIcon } from "./ornaments/Floral";
+import RitualArt from "./ornaments/RitualArt";
 import Reveal from "./Reveal";
 import SectionHeading from "./SectionHeading";
 
@@ -78,19 +80,39 @@ export default function Events() {
 
               <ul className="mt-3 divide-y divide-gold-300/30">
                 {day.items.map((item) => (
-                  <li key={item.name.en} className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 py-2.5">
-                    <span className="flex items-center gap-3">
+                  <li key={item.name.en} className="flex items-center gap-3.5 py-3 sm:gap-4">
+                    {item.photo ? (
+                      <span className="relative h-16 w-16 shrink-0 sm:h-[4.5rem] sm:w-[4.5rem]">
+                        <Image
+                          src={item.photo}
+                          alt={tx(item.name)}
+                          fill
+                          sizes="72px"
+                          className="rounded-full border-2 border-gold-300 object-cover"
+                        />
+                        {item.art && (
+                          <RitualArt kind={item.art} className="absolute -bottom-1 -right-1 h-7 w-7 drop-shadow" />
+                        )}
+                      </span>
+                    ) : item.art ? (
+                      <RitualArt
+                        kind={item.art}
+                        className={`shrink-0 drop-shadow-sm ${day.highlight ? "h-24 w-24 sm:h-28 sm:w-28" : "h-16 w-16 sm:h-[4.5rem] sm:w-[4.5rem]"}`}
+                      />
+                    ) : (
                       <RoseIcon className="h-4 w-4 shrink-0" tone={day.highlight ? "pink" : "ivory"} />
-                      <span className="font-serif text-xl text-ink sm:text-2xl">{tx(item.name)}</span>
-                    </span>
-                    <span className="flex flex-wrap items-center gap-1.5">
-                      {item.time && (
-                        <span className="inline-flex items-center gap-1.5 rounded-full border border-gold-300/70 bg-ivory px-3 py-1 font-sans text-xs text-gold-700">
-                          <Clock className="h-3.5 w-3.5" aria-hidden="true" />
-                          {tx(item.time)}
-                        </span>
-                      )}
-                      {perItem && <VenueTag which={item.venue ?? "groom"} />}
+                    )}
+                    <span className="flex min-w-0 flex-col items-start gap-1.5">
+                      <span className="font-serif text-xl leading-tight text-ink sm:text-2xl">{tx(item.name)}</span>
+                      <span className="flex flex-wrap items-center gap-1.5">
+                        {item.time && (
+                          <span className="inline-flex items-center gap-1.5 rounded-full border border-gold-300/70 bg-ivory px-3 py-1 font-sans text-xs text-gold-700">
+                            <Clock className="h-3.5 w-3.5" aria-hidden="true" />
+                            {tx(item.time)}
+                          </span>
+                        )}
+                        {perItem && <VenueTag which={item.venue ?? "groom"} />}
+                      </span>
                     </span>
                   </li>
                 ))}

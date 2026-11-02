@@ -42,8 +42,24 @@ export type Venue = {
   pin: { lat: number; lng: number } | null;
 };
 
+/** Animated illustration shown beside an event (see components/ornaments/RitualArt.tsx). */
+export type RitualKey =
+  | "mataPujan"
+  | "haldi"
+  | "mehandi"
+  | "mandap"
+  | "gangaChari"
+  | "dholiKalash"
+  | "nikasi"
+  | "mamera"
+  | "pritibhoj"
+  | "baraat";
+
 export type ScheduleItem = {
   name: Txt;
+  art?: RitualKey;
+  /** Optional real photo for this event, e.g. "/photos/haldi.jpg" — shown with the illustration as a badge. */
+  photo?: string;
   /** Defaults to the groom's home. */
   venue?: VenueKey;
   /** Only set when a time was actually supplied — never invent one. */
@@ -175,27 +191,27 @@ export const wedding: WeddingConfig = {
   },
 
   events: [
-    { date: "2027-01-14", items: [{ name: { hi: "माता पूजन", en: "Mata Pujan" } }] },
+    { date: "2027-01-14", items: [{ name: { hi: "माता पूजन", en: "Mata Pujan" }, art: "mataPujan" }] },
     {
       date: "2027-01-16",
-      items: [{ name: { hi: "हल्दी", en: "Haldi" } }, { name: { hi: "मेहंदी", en: "Mehandi" } }],
+      items: [{ name: { hi: "हल्दी", en: "Haldi" }, art: "haldi" }, { name: { hi: "मेहंदी", en: "Mehandi" }, art: "mehandi" }],
     },
     {
       date: "2027-01-17",
       items: [
-        { name: { hi: "मंडप छाया", en: "Mandap Chhaya" }, time: { hi: "सुबह", en: "Morning" } },
-        { name: { hi: "गंगा चरी", en: "Ganga Chari" }, time: { hi: "दोपहर", en: "Afternoon" } },
-        { name: { hi: "ढोली कलश", en: "Dholi Kalash" }, time: { hi: "शाम 5:00 बजे से", en: "5:00 PM onwards" } },
-        { name: { hi: "निकासी", en: "Nikasi" }, time: { hi: "रात 8:00 बजे से", en: "8:00 PM onwards" } },
+        { name: { hi: "मंडप छाया", en: "Mandap Chhaya" }, art: "mandap", time: { hi: "सुबह", en: "Morning" } },
+        { name: { hi: "गंगा चरी", en: "Ganga Chari" }, art: "gangaChari", time: { hi: "दोपहर", en: "Afternoon" } },
+        { name: { hi: "ढोली कलश", en: "Dholi Kalash" }, art: "dholiKalash", time: { hi: "शाम 5:00 बजे से", en: "5:00 PM onwards" } },
+        { name: { hi: "निकासी", en: "Nikasi" }, art: "nikasi", time: { hi: "रात 8:00 बजे से", en: "8:00 PM onwards" } },
       ],
     },
     {
       date: "2027-01-18",
-      items: [{ name: { hi: "मामेरा", en: "Mamera" } }, { name: { hi: "प्रीतिभोज", en: "Pritibhoj" } }],
+      items: [{ name: { hi: "मामेरा", en: "Mamera" }, art: "mamera" }, { name: { hi: "प्रीतिभोज", en: "Pritibhoj" }, art: "pritibhoj" }],
     },
     {
       date: "2027-01-19",
-      items: [{ name: { hi: "बारात", en: "Bharat (Baraat)" }, venue: "bride" }],
+      items: [{ name: { hi: "बारात", en: "Bharat (Baraat)" }, art: "baraat", venue: "bride" }],
       highlight: true,
     },
   ],

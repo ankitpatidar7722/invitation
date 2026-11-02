@@ -155,6 +155,54 @@ html:not(.js) .cover {
   animation: fireworks-veil 4.4s ease-in-out both;
 }
 
+/* ── Ritual illustrations (components/ornaments/RitualArt.tsx) ──
+   SVG transform-origins below are in the 64×64 viewBox. */
+.ritual-art {
+  clip-path: circle(50%);
+}
+.ritual-art .ra-flame { transform-origin: 32px 35px; animation: ra-flicker 0.8s ease-in-out infinite alternate; }
+.ritual-art .ra-glow { animation: ra-glow 1.8s ease-in-out infinite alternate; }
+.ritual-art .ra-rise { animation: ra-rise 2.4s ease-out infinite; }
+.ritual-art .ra-draw > * { animation: ra-draw 3.6s ease-in-out infinite; }
+.ritual-art .ra-sway { transform-origin: 32px 27px; animation: ra-sway 2.6s ease-in-out infinite alternate; }
+.ritual-art .ra-sway-slow { transform-origin: 50px 30px; animation: ra-sway 3.4s ease-in-out infinite alternate; }
+.ritual-art .ra-wave { animation: ra-wave 2.2s linear infinite; }
+.ritual-art .ra-wave-slow { animation: ra-wave 3.4s linear infinite reverse; }
+.ritual-art .ra-bob { animation: ra-bob 2s ease-in-out infinite alternate; }
+.ritual-art .ra-pulse { transform-origin: 32px 34px; animation: ra-pulse 0.9s ease-out infinite; }
+.ritual-art .ra-stick { transform-origin: 32px 6px; animation: ra-stick 0.45s ease-in-out infinite alternate; }
+.ritual-art .ra-trot { animation: ra-bob 0.38s ease-in-out infinite alternate; }
+.ritual-art .ra-leg { transform-box: fill-box; transform-origin: top center; animation: ra-leg 0.38s ease-in-out infinite alternate; }
+.ritual-art .ra-leg-b { animation-direction: alternate-reverse; }
+.ritual-art .ra-tail { transform-origin: 15px 33px; animation: ra-sway 0.76s ease-in-out infinite alternate; }
+.ritual-art .ra-ground { animation: ra-wave 0.9s linear infinite; }
+.ritual-art .ra-lid { animation: ra-lid 1.4s ease-in-out infinite; }
+.ritual-art .ra-twinkle { transform-box: fill-box; transform-origin: center; animation: ra-twinkle 1.6s ease-in-out infinite; }
+.ritual-art .ra-steam { animation: ra-steam 2.6s ease-out infinite; }
+.ritual-art .ra-blink { animation: ra-blink 0.9s ease-in-out infinite alternate; }
+.ritual-art .ra-burst { animation: ra-burst 1.6s ease-out infinite; }
+
+@keyframes ra-flicker { 0% { transform: scale(1, 1); } 50% { transform: scale(0.88, 1.12) rotate(-3deg); } 100% { transform: scale(1.06, 0.92) rotate(3deg); } }
+@keyframes ra-glow { from { opacity: 0.2; } to { opacity: 0.6; } }
+@keyframes ra-rise { 0% { transform: translateY(6px); opacity: 0; } 30% { opacity: 1; } 100% { transform: translateY(-16px); opacity: 0; } }
+@keyframes ra-draw { 0% { stroke-dashoffset: 100; } 55%, 85% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: -100; } }
+@keyframes ra-sway { from { transform: rotate(-4deg); } to { transform: rotate(4deg); } }
+@keyframes ra-wave { from { transform: translateX(0); } to { transform: translateX(-16px); } }
+@keyframes ra-bob { from { transform: translateY(0); } to { transform: translateY(-1.6px); } }
+@keyframes ra-pulse { 0% { opacity: 0; transform: scale(0.85); } 40% { opacity: 1; } 100% { opacity: 0; transform: scale(1.12); } }
+@keyframes ra-stick { from { transform: rotate(-10deg); } to { transform: rotate(8deg); } }
+@keyframes ra-leg { from { transform: rotate(-16deg); } to { transform: rotate(16deg); } }
+@keyframes ra-lid { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-4px) rotate(-4deg); } }
+@keyframes ra-twinkle { 0%, 100% { transform: scale(0.4); opacity: 0.2; } 50% { transform: scale(1.1); opacity: 1; } }
+@keyframes ra-steam { 0% { transform: translateY(4px); opacity: 0; } 30% { opacity: 0.9; } 100% { transform: translateY(-8px); opacity: 0; } }
+@keyframes ra-blink { from { opacity: 1; } to { opacity: 0.25; } }
+@keyframes ra-burst { 0% { transform: scale(0.2); opacity: 1; } 70% { opacity: 1; } 100% { transform: scale(1.2); opacity: 0; } }
+
+/* Only animate when the event card is on screen. */
+html.js .reveal:not(.is-visible) .ritual-art * {
+  animation-play-state: paused;
+}
+
 @keyframes float-slow {
   0%,
   100% {
@@ -244,6 +292,9 @@ html:not(.js) .cover {
   }
   .petal {
     display: none;
+  }
+  .ritual-art * {
+    animation: none !important;
   }
   *,
   *::before,
