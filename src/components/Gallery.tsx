@@ -176,7 +176,7 @@ export default function Gallery() {
                   alt={tx(photo.alt)}
                   fill
                   sizes="(max-width: 768px) 50vw, 33vw"
-                  className="object-cover transition duration-700 group-hover:scale-105"
+                  className="object-cover object-[50%_25%] transition duration-700 group-hover:scale-105"
                 />
               ) : (
                 <Placeholder photo={photo} />

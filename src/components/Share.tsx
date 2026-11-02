@@ -29,8 +29,8 @@ export default function Share() {
   const [canShareFiles, setCanShareFiles] = useState(false);
 
   const fileBase = `${wedding.groom.name.en}-${wedding.bride.name.en}`;
-  // English guests get an English link; the QR always opens the default (Hindi) page.
-  const link = base ? (lang === wedding.defaultLang ? `${base}/` : `${base}/?lang=${lang}`) : "";
+  // Shared links always open in the default language (Hindi).
+  const link = base ? `${base}/` : "";
   const message = `${s.shareText(tx(wedding.groom.name), tx(wedding.bride.name), shortDate(wedding.weddingDate, lang))} ${link}`;
 
   useEffect(() => {

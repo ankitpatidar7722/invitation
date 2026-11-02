@@ -19,8 +19,7 @@ Built with Next.js 15 (App Router), React 19, TypeScript, Tailwind CSS 3 and luc
 
 ## Hindi / English
 
-- The site opens in **Hindi** by default (`defaultLang` in `src/data/wedding.ts`). The **EN / हिं** button (on the cover and in the top bar) switches language; the guest's choice is remembered.
-- A link ending in `?lang=en` opens directly in English.
+- The site **always opens in Hindi** (`defaultLang` in `src/data/wedding.ts`) — every visit and every shared link. The **EN / हिं** button (on the cover and in the top bar) switches language for that page view only.
 - Every guest-facing text in `wedding.ts` is written as `{ hi: "…", en: "…" }`. Fixed UI labels (buttons, headings) are in `src/i18n/dict.ts`.
 
 ## Invitation card & QR code (section "निमंत्रण भेजें / Share")

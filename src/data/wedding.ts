@@ -202,7 +202,11 @@ export const wedding: WeddingConfig = {
 
   // Replace placeholders by adding files to /public/photos and setting `src`.
   gallery: [
-    { alt: { hi: "अंकित एवं यशस्वी", en: "Ankit and Yashasvi" }, caption: { hi: "हमारी कहानी", en: "Our Story" } },
+    {
+      src: "/photos/1000566660.jpg.jpeg",
+      alt: { hi: "अंकित एवं यशस्वी साथ में", en: "Ankit and Yashasvi together" },
+      caption: { hi: "हमारी कहानी", en: "Our Story" },
+    },
     { alt: { hi: "अंकित एवं यशस्वी साथ में", en: "Ankit and Yashasvi together" }, caption: { hi: "साथ-साथ", en: "Together" } },
     { alt: { hi: "मुस्कुराते अंकित एवं यशस्वी", en: "Ankit and Yashasvi smiling" }, caption: { hi: "मुस्कान", en: "Smiles" } },
     { alt: { hi: "परिवार के साथ अंकित एवं यशस्वी", en: "Ankit and Yashasvi with family" }, caption: { hi: "परिवार", en: "Family" } },

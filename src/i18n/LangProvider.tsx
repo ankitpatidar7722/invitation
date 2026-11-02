@@ -4,7 +4,6 @@ import { createContext, useCallback, useContext, useEffect, useState, type React
 import { wedding, type Lang, type Txt } from "@/data/wedding";
 import { dicts, type Dict } from "./dict";
 
-const STORAGE_KEY = "ay-invitation-lang";
 const HTML_LANG: Record<Lang, string> = { hi: "hi", en: "en-IN" };
 
 type LangContextValue = {
@@ -18,33 +17,13 @@ type LangContextValue = {
 const LangContext = createContext<LangContextValue | null>(null);
 
 export function LangProvider({ children }: { children: ReactNode }) {
-  const [lang, setLangState] = useState<Lang>(wedding.defaultLang);
-
-  // A ?lang=en / ?lang=hi link wins, then the guest's last choice.
-  useEffect(() => {
-    const fromUrl = new URLSearchParams(window.location.search).get("lang");
-    let stored: string | null = null;
-    try {
-      stored = localStorage.getItem(STORAGE_KEY);
-    } catch {
-      /* storage unavailable */
-    }
-    const pick = fromUrl === "hi" || fromUrl === "en" ? fromUrl : stored;
-    if (pick === "hi" || pick === "en") setLangState(pick);
-  }, []);
+  // Every visit and every shared link opens in the default language (Hindi);
+  // the toggle only switches for the current page view.
+  const [lang, setLang] = useState<Lang>(wedding.defaultLang);
 
   useEffect(() => {
     document.documentElement.lang = HTML_LANG[lang];
   }, [lang]);
-
-  const setLang = useCallback((next: Lang) => {
-    setLangState(next);
-    try {
-      localStorage.setItem(STORAGE_KEY, next);
-    } catch {
-      /* ignore */
-    }
-  }, []);
 
   const tx = useCallback((value: Txt) => value[lang], [lang]);
 
