@@ -154,14 +154,23 @@ export async function renderCard(lang: Lang, qr: QrMatrix | null): Promise<HTMLC
   y += 78;
 
   // Families, two columns
+  const fam = dict.families;
   const colW = 430;
-  const column = (x: number, role: string, grand: string, grandName: string, child: string, childName: string) => {
+  const column = (
+    x: number,
+    role: string,
+    grand: string,
+    grandName: string,
+    child: string,
+    childName: string,
+    village: string,
+  ) => {
     let cy = y;
     spacing(5);
     text(role.toUpperCase(), font.eyebrow, COLOR.rose, x, cy);
     spacing(0);
     cy += 52;
-    for (const [label, value] of [[grand, grandName], [child, childName]] as const) {
+    for (const [label, value] of [[grand, grandName], [child, childName], [fam.village, village]] as const) {
       spacing(3);
       text(label.toUpperCase(), font.label, COLOR.gold, x, cy);
       spacing(0);
@@ -175,9 +184,8 @@ export async function renderCard(lang: Lang, qr: QrMatrix | null): Promise<HTMLC
     }
     return cy;
   };
-  const fam = dict.families;
-  const leftEnd = column(290, fam.groom, fam.grandson, tx(wedding.groom.grandfather), fam.son, tx(wedding.groom.father));
-  const rightEnd = column(790, fam.bride, fam.granddaughter, tx(wedding.bride.grandfather), fam.daughter, tx(wedding.bride.father));
+  const leftEnd = column(290, fam.groom, fam.grandson, tx(wedding.groom.grandfather), fam.son, tx(wedding.groom.father), tx(wedding.venues.groom.village));
+  const rightEnd = column(790, fam.bride, fam.granddaughter, tx(wedding.bride.grandfather), fam.daughter, tx(wedding.bride.father), tx(wedding.venues.bride.village));
   ctx.strokeStyle = COLOR.goldLine;
   ctx.lineWidth = 2;
   ctx.beginPath();

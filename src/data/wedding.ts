@@ -29,6 +29,8 @@ export type Venue = {
   tag: Txt;
   /** Short place name. */
   shortName: Txt;
+  /** Village with tehsil, shown under the family names, e.g. "गोठड़ा, नलखेड़ा". */
+  village: Txt;
   lines: Txt[];
   /** Text used for Google Maps search when no pin is set. */
   mapsQuery: string;
@@ -115,8 +117,8 @@ export const wedding: WeddingConfig = {
   },
   bride: {
     name: { hi: "यशस्वी", en: "Yashasvi" },
-    grandfather: { hi: "पटेल कैलाश चंद्र जी कलसोडे", en: "Patel Kailash Chandra Ji Kalsode" },
-    father: { hi: "महेश जी कलसोडे", en: "Mahesh Ji Kalsode" },
+    grandfather: { hi: "पटेल कैलाश चंद्र जी कलसौद", en: "Patel Kailash Chandra Ji Kalsode" },
+    father: { hi: "महेश जी कलसौद", en: "Mahesh Ji Kalsode" },
   },
 
   invocation: "॥ श्री गणेशाय नमः ॥",
@@ -134,6 +136,7 @@ export const wedding: WeddingConfig = {
       label: { hi: "वर पक्ष निवास", en: "Groom's Home" },
       tag: { hi: "वर निवास · गोठड़ा", en: "Groom's home · Gothada" },
       shortName: { hi: "गोठड़ा", en: "Gothada" },
+      village: { hi: "गोठड़ा, नलखेड़ा", en: "Gothada, Nalkheda" },
       lines: [
         { hi: "ग्राम गोठड़ा, तहसील नलखेड़ा,", en: "Village Gothada, Tehsil Nalkheda," },
         { hi: "जिला आगर मालवा,", en: "District Agar Malwa," },
@@ -148,6 +151,7 @@ export const wedding: WeddingConfig = {
       label: { hi: "वधू पक्ष निवास", en: "Bride's Home" },
       tag: { hi: "वधू निवास · कालाखेड़ा", en: "Bride's home · Kalakheda" },
       shortName: { hi: "कालाखेड़ा", en: "Kalakheda" },
+      village: { hi: "कालाखेड़ा, गरोठ", en: "Kalakheda, Garoth" },
       lines: [
         { hi: "ग्राम कालाखेड़ा, तहसील गरोठ,", en: "Village Kalakheda, Tehsil Garoth," },
         { hi: "जिला मंदसौर,", en: "District Mandsaur," },
@@ -217,7 +221,7 @@ export const wedding: WeddingConfig = {
       en: "Your presence and blessings will make our celebration complete. We look forward to welcoming you.",
     },
     signOff: { hi: "स्नेहाकांक्षी", en: "With love & warm regards" },
-    families: { hi: "चौधरी एवं कलसोडे परिवार", en: "The Choudhary & Kalsode Families" },
+    families: { hi: "चौधरी एवं कलसौद परिवार", en: "The Choudhary & Kalsode Families" },
   },
 
   site: {

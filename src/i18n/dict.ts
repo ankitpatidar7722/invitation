@@ -35,6 +35,7 @@ const en = {
     son: "Son of",
     granddaughter: "Granddaughter of",
     daughter: "Daughter of",
+    village: "Village",
   },
   countdown: {
     eyebrow: "Counting the moments",
@@ -155,6 +156,7 @@ const hi: Dict = {
     son: "सुपुत्र",
     granddaughter: "सुपौत्री",
     daughter: "सुपुत्री",
+    village: "ग्राम",
   },
   countdown: {
     eyebrow: "शुभ घड़ी की प्रतीक्षा",
